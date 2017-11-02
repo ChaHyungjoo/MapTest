@@ -516,28 +516,28 @@
 		//파일업로드------------------------------------------------------------------------------------------------------
  		$(function(){
 			var submitButton = $("#submit");
+			var fileInput = $("#file-upload");
 			
 			submitButton.click(function(e){
 				var name = $("#name").val();
 				var address = $("#address").val();
 				var location = $("#location").val();
-				
-				var fileInput = $("#file-upload");
-				
+								
 				alert(name);
 				alert(address);
 				alert(location);
-				alert(fileInput);
-				
+								
 				var event = new MouseEvent("click", {
 					'view': window,
 					'bubbles': true,
 					'cancelable': true
 				});
 				
+				
 				fileInput.dispatchEvent(event);
-				fileInput.onchange = function(){
-					var file = fileInput.files[0];
+				fileInput.change(function(){
+					var file = fileInput.files.eq(0);
+					alert(file.name);
 					
 					var formData = new FormData();
 					formData.append("name", name);
@@ -547,17 +547,16 @@
 					
 					var xhr = new XMLHttpRequest();
 					
-					xhr.onerror = function(e){
+					/* xhr.onerror = function(e){
 						alert("예기치 못한 오류");
-					};
+					}; */
 					xhr.open("POST", "../upload?${_csrf.parameterName}=${_csrf.token}", true);	
 					xhr.send(formData);
 					
 					
-					//alert(file.name);
 					/* for(var key in fileInput.files[0])
 						alert(key); */
-				};
+				});
 				
 			});
 					
