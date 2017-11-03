@@ -214,7 +214,7 @@
 		</div>
 	</div>
 	
-	<div id="test">ㅁㅁㅁㅁ</div>
+<!-- 	<div id="test">ㅁㅁㅁㅁ</div>
 	<div>
 		<form id="restaurant" method="get">
 			<label>가게명: </label><input id="name" type="text" readonly/><br />
@@ -222,6 +222,36 @@
 			<label>좌표: </label><input id="location" type="text" /><br />
 			<input id="file-upload" type="file" />
 			<input id="submit" type="submit" value="전송" />
+		</form>
+	</div> -->
+	
+	
+	<h2 class="main title">가게 등록 페이지</h2>
+	<div class="">
+		<h3 class="hidden">음식점 등록</h3>
+		<form action="?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+			<table class="">
+				<tbody>
+					<tr>
+						<th>가게 이름</th>
+						<td><input id="name" type="text" name="name"/></td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td><input id="address" type="text" name="address"/><input type="text" name="location" style="display: none;"/></td>
+					</tr>
+					<tr>
+						<th>위치</th>
+						<td><input id="location" type="text" name="location" /></td>
+					</tr>
+					<tr>
+						<th>대표 사진</th>
+						<td><input id="file-upload" type="file" name="file"/></td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<input id="submit" type="submit" value="등록하기"/>
 		</form>
 	</div>
 	
