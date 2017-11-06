@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,21 +21,28 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/*")
 public class MapController {
+	private int cnt = 0;
 	
-	@RequestMapping("map")
+	@RequestMapping("index")
 	//@ResponseBody
 	public String index() {
 		
 		//return "map page";
-		return "/WEB-INF/views/mapTest5.jsp";
+		return "/WEB-INF/views/index.jsp";
 	}
 	
-/*	@RequestMapping("upload")
-	@ResponseBody
-	public String upload(
+	@RequestMapping(value="map", method=RequestMethod.GET)
+	public String map() {
+		return "/WEB-INF/views/mapTest5.jsp";
+	}
+
+	//@RequestMapping("map")
+	@RequestMapping(value="map", method=RequestMethod.POST)
+	public String map(
 			String name, 
 			String address, 
 			String location, 
+			//@RequestParam("file") MultipartFile file, 
 			MultipartFile file, 
 			HttpServletRequest request) throws IOException {
 		
@@ -43,8 +51,19 @@ public class MapController {
 		System.out.println(location);
 		System.out.println(file.getOriginalFilename());
 		
+		
 		ServletContext ctx = request.getServletContext();
-		String path = ctx.getRealPath("/resource/upload");
+		String path = ctx.getRealPath("/resources/upload");
+		//System.out.println(path);
+		
+		File f = new File(path);	//파일이 저장될 경로만 객체로 생성된 상태
+		
+		//경로가 없을 경우 해당 경로(폴더)를 생성
+		if(!f.exists()) {
+			if(!f.mkdirs())
+				System.out.println("디렉토리를 생성할 수 없습니다.");
+		}
+		
 		path += File.separator + file.getOriginalFilename();
 		File f2 = new File(path);
 		
@@ -63,24 +82,7 @@ public class MapController {
 		fis.close();
 		
 		
-		return "aaa";
-	}*/
-
-	@RequestMapping(value="upload", method=RequestMethod.POST)
-	public String reg(
-			String name, 
-			String address, 
-			String location, 
-			MultipartFile file, 
-			HttpServletRequest request) {
-		
-		System.out.println(name);
-		System.out.println(address);
-		System.out.println(location);
-		System.out.println(file.getOriginalFilename());
-		
-		
-		return "aaaa";
+		return "redirect:index";
 	}
 	
 	

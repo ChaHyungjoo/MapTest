@@ -19,8 +19,10 @@
 }
 
 .map_wrap {
+	margin-left: auto;
+	margin-right: auto;
 	position: relative;
-	width: 100%;
+	width: 80%;
 	height: 500px;
 }
 
@@ -229,28 +231,29 @@
 	<h2 class="main title">가게 등록 페이지</h2>
 	<div class="">
 		<h3 class="hidden">음식점 등록</h3>
-		<form action="?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+		<%-- <form action="?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data"> --%>
+		<form method="post" enctype="multipart/form-data">
 			<table class="">
 				<tbody>
 					<tr>
 						<th>가게 이름</th>
-						<td><input id="name" type="text" name="name"/></td>
+						<td><input id="n" type="text" name="name" /></td>
 					</tr>
 					<tr>
 						<th>주소</th>
-						<td><input id="address" type="text" name="address"/><input type="text" name="location" style="display: none;"/></td>
+						<td><input id="a" type="text" name="address" /></td>
 					</tr>
 					<tr>
 						<th>위치</th>
-						<td><input id="location" type="text" name="location" /></td>
+						<td><input id="l" type="text" name="location" /></td>
 					</tr>
 					<tr>
 						<th>대표 사진</th>
-						<td><input id="file-upload" type="file" name="file"/></td>
+						<td><input id="f" type="file" name="file" /></td>
 					</tr>
 				</tbody>
 			</table>
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
 			<input id="submit" type="submit" value="등록하기"/>
 		</form>
 	</div>
@@ -399,9 +402,9 @@
 							, function() {
 								//alert(placePosition);
 								$("#test").text(placePosition);
-								$("#name").val(title);
-								$("#address").val(address);
-								$("#location").val(placePosition);
+								$("#n").val(title);
+								$("#a").val(address);
+								$("#l").val(placePosition);
 								displayInfowindow(marker, title, address, phone, placePosition);
 							});
 
@@ -412,9 +415,9 @@
 					itemEl.onclick = function() {
 						//alert(placePosition);
 						$("#test").text(placePosition);
-						$("#name").val(title);
-						$("#address").val(address);
-						$("#location").val(placePosition);
+						$("#n").val(title);
+						$("#a").val(address);
+						$("#l").val(placePosition);
 						displayInfowindow(marker, title, address, phone, placePosition);
 					};
 
@@ -546,17 +549,14 @@
 		//파일업로드------------------------------------------------------------------------------------------------------
  		$(function(){
 			var submitButton = $("#submit");
-			var fileInput = $("#file-upload");
+			var fileInput = $("#f");
 			
-			submitButton.click(function(e){
-				var name = $("#name").val();
-				var address = $("#address").val();
-				var location = $("#location").val();
-								
-				alert(name);
-				alert(address);
-				alert(location);
-								
+			var name;
+			var address;
+			var location;
+			var file;
+			
+			/* fileInput.click(function(e){
 				var event = new MouseEvent("click", {
 					'view': window,
 					'bubbles': true,
@@ -564,38 +564,40 @@
 				});
 				
 				
-				fileInput.dispatchEvent(event);
-				fileInput.change(function(){
-					var file = fileInput.files.eq(0);
+			}); */
+				/* fileInput.change(function(){
+					file = fileInput[0].files[0];
 					alert(file.name);
-					
-					var formData = new FormData();
-					formData.append("name", name);
-					formData.append("address", address);
-					formData.append("location", location);
-					formData.append("file", file);
-					
-					var xhr = new XMLHttpRequest();
-					
-					/* xhr.onerror = function(e){
-						alert("예기치 못한 오류");
-					}; */
-					xhr.open("POST", "../upload?${_csrf.parameterName}=${_csrf.token}", true);	
-					xhr.send(formData);
-					
-					
-					/* for(var key in fileInput.files[0])
-						alert(key); */
-				});
+				}); */
+						
+			/* submitButton.click(function(e){
+				name = $("#n").val();
+				address = $("#a").val();
+				location = $("#l").val();
+				file = fileInput[0].files[0];
 				
-			});
+				alert(name);
+				alert(address);
+				alert(location);
+				alert(file.name);
+								
+				var formData = new FormData();
+				formData.append("name", name);
+				formData.append("address", address);
+				formData.append("location", location);
+				formData.append("file", file);
+				
+				var xhr = new XMLHttpRequest();
+				
+				xhr.onerror = function(e){
+					alert("예기치 못한 오류");
+				};
+				xhr.open("POST", "?${_csrf.parameterName}=${_csrf.token}", true);	
+				xhr.send(formData);
+				
+			}); */
 					
 		});
-		
-		
-		
-		
-		
 		
 		
 	</script>
