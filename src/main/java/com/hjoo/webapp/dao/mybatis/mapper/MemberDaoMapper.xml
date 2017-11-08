@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjoo.webapp.dao.MemberDao">
+	<insert id="insert" parameterType="com.hjoo.webapp.entity.Member">
+	<selectKey order="BEFORE" keyProperty="id" resultType="int">
+	select IFNULL(max(cast(id as unsigned)), 0)+1 from Member;
+	</selectKey>
+		insert into Member(id, email, pwd, nickName, image, mentor)
+		values(#{id}, #{email} ,#{pwd}, #{nickName}, #{image}, #{mentor});
+	</insert>
+	
+	<select id="Login" resultType="com.hjoo.webapp.entity.Member">
+		select email, pwd from Member WHERE email = #{email} and pwd = #{pwd};
+	</select>
+	
+	<select id="get" resultType="com.hjoo.webapp.entity.Member" >
+		select * from Member where email = #{loginEmail}
+	</select>
+	
+	<select id="checkId" resultType="com.hjoo.webapp.entity.Member" >
+		select count(*) from Member where email = #{Email}
+	</select>
+</mapper>

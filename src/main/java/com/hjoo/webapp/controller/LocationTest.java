@@ -6,7 +6,12 @@ public class LocationTest {
 		String location = "(37.5566398795825, 126.93524677384968)";
 		location = location.replaceAll("[(,)]", "");
 		
-		System.out.println(location);
+		String[] str = location.split(" ");
+		
+		for(int i=0; i<str.length; i++)
+			System.out.println(str[i]);
+		
+		//System.out.println(location);
 		
 	}
 
