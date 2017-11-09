@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.hjoo.webapp.dao.RestaurantDao;
+import com.hjoo.webapp.entity.Restaurant;
+import com.hjoo.webapp.entity.RestaurantView;
 
 
 @Controller
@@ -96,7 +100,7 @@ public class MapController {
 		return "/WEB-INF/views/mapTest6.jsp";
 	}*/
 	
-	@RequestMapping("map2")
+/*	@RequestMapping("map2")
 	public String restaurant(@RequestParam(value="p", defaultValue="1")  Integer page,
 							@RequestParam(value="f", defaultValue="name")  String field,
 							@RequestParam(value="q", defaultValue="") String query,
@@ -106,5 +110,33 @@ public class MapController {
 		model.addAttribute("page", restaurantDao.getCount());
 		
 		return "/WEB-INF/views/mapTest6.jsp";
+	}*/
+	
+	@RequestMapping("map2")
+	public String map2(Model model) {
+		
+		model.addAttribute("list", restaurantDao.getList());
+		model.addAttribute("page", restaurantDao.getCount());
+		
+		return "/WEB-INF/views/mapTest6.jsp";
 	}
+	
+	@RequestMapping("map2-ajax")
+	@ResponseBody
+	public String restaurant(Model model) {
+		
+		List<Restaurant> list = restaurantDao.getList();
+		
+		model.addAttribute("list", restaurantDao.getList());
+		model.addAttribute("page", restaurantDao.getCount());
+		
+		String json = "";
+		
+		Gson gson = new Gson();
+		json = gson.toJson(list);
+		
+		//return "/WEB-INF/views/mapTest6.jsp";
+		return json;
+	}
+	
 }
