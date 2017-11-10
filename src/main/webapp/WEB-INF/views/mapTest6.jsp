@@ -342,39 +342,61 @@
 			.done(function(data) {
 					//alert(data.length);
 					//alert(data[0].location);
-					var str = data[0].location;
-					var str2 = str.replace(/\(|\)/g,"");
-					alert(str2);
+					//var str = data[0].location;
 					
-					var strs = str2.split(", ");
-	
+					/* var location = data[0].location.replace(/\(|\)/g,"");
+					var xy = location.split(", ");
+					alert(xy[0]+" "+xy[1]); */
+					
+					var locations = new Array();
+					for(var i=0; i<data.length; i++){
+						var location = data[i].location.replace(/\(|\)/g,"");
+						locations.push(location);
+					}
+					//alert(locations[0]);
+					
+					
 					// 마커를 표시할 위치와 title 객체 배열입니다 
-					var positions = [
-						/* {
-							title : '카카오',
-							latlng : new daum.maps.LatLng(33.450705, 126.570677)
-						},
-						{
-							title : '생태연못',
-							latlng : new daum.maps.LatLng(33.450936, 126.569477)
-						},
-						{
-							title : '텃밭',
-							latlng : new daum.maps.LatLng(33.450879, 126.569940)
-						}, */
+					/* var positions = [
 						{
 							title : data[0].name,
-							latlng : new daum.maps.LatLng(strs[0], strs[1])
+							latlng : new daum.maps.LatLng(xy[0], xy[1])
 							//latlng : new daum.maps.LatLng(data[0].location.replace(/\(|\)/g, ""))
 							//latlng : new daum.maps.LatLng(37.5566398795825, 126.93524677384968)
+						},
+						{
+							title : data[1].name,
+							latlng : new daum.maps.LatLng(xy[0], xy[1])
+						},
+						{
+							title : data[2].name,
+							latlng : new daum.maps.LatLng(xy[0], xy[1])
 						}
 					];
-	
+					var positionss = JSON.stringify(positions);
+					alert(positionss);
+					alert(positions[0].latlng); */
+					
+					var positionList = new Array();
+					for(var i=0; i<data.length; i++){
+						var restaurant = new Object();
+						var xy = locations[i].split(", ");
+						
+						restaurant.title = data[i].name;
+						restaurant.latlng = new daum.maps.LatLng(xy[0], xy[1]);
+						
+						positionList.push(restaurant);
+					}
+					
+					var positions = JSON.stringify(positionList);
+					//alert(positions);
+					alert(positionList.length);
+					
 					// 마커 이미지의 이미지 주소입니다
-					var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+					/* var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 					
 					for (var i = 0; i < positions.length; i++) {
-	
+						
 						// 마커 이미지의 이미지 크기 입니다
 						var imageSize = new daum.maps.Size(24, 35);
 	
@@ -386,6 +408,25 @@
 							map : map, // 마커를 표시할 지도
 							position : positions[i].latlng, // 마커를 표시할 위치
 							title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+							image : markerImage // 마커 이미지 
+						});
+					} */
+					
+					// 마커 이미지의 이미지 주소입니다
+					var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+					for (var i = 0; i < data.length; i++) {
+	
+						// 마커 이미지의 이미지 크기 입니다
+						var imageSize = new daum.maps.Size(24, 35);
+	
+						// 마커 이미지를 생성합니다    
+						var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
+	
+						// 마커를 생성합니다
+						var marker = new daum.maps.Marker({
+							map : map, // 마커를 표시할 지도
+							position : positionList[i].latlng, // 마커를 표시할 위치
+							title : positionList[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 							image : markerImage // 마커 이미지 
 						});
 					}
