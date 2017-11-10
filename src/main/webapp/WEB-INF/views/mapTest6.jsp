@@ -389,8 +389,7 @@
 					}
 					
 					var positions = JSON.stringify(positionList);
-					//alert(positions);
-					alert(positionList.length);
+					//alert(positionList.length);
 					
 					// 마커 이미지의 이미지 주소입니다
 					/* var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
