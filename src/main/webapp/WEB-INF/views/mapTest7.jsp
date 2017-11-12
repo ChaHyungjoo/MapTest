@@ -264,7 +264,7 @@
 		<div id="map"
 			style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
-		<div id="menu_wrap" class="bg_white">
+		<!-- <div id="menu_wrap" class="bg_white">
 			<div class="option">
 				<div>
 					<form onsubmit="searchPlaces(); return false;">
@@ -276,7 +276,7 @@
 			<hr>
 			<ul id="placesList"></ul>
 			<div id="pagination"></div>
-		</div>
+		</div> -->
 	</div>
 
 
@@ -308,18 +308,8 @@
 		
 		// 마커가 지도 위에 표시되도록 설정합니다
 		baseMarker.setMap(map);
-		
-		var ajaxButton = $("input[value='ajax']");
-		ajaxButton.click(function(){
-			alert("hi~");
-		});
-		
-		
-		baseMarker.click(function(){
-			alert("hi~");
-		});
 				
-		/* (function(baseMarker, title) {
+		(function(baseMarker, title) {
 			daum.maps.event.addListener(
 					baseMarker
 					, 'click'
@@ -333,13 +323,12 @@
 
 			infowindow.setContent(content);
 			infowindow.open(map, baseMarker);
-		} */
+		}
 		
 		/* -----------------------------------------------------------------------------------------*/
 		
 		$.getJSON("map2-ajax")
 			.done(function(data) {
-					alert(data.length);
 					var locations = new Array();
 					for(var i=0; i<data.length; i++){
 						var location = data[i].location.replace(/\(|\)/g,"");
@@ -383,9 +372,8 @@
 					
 					
 					for (var i = 0; i < data.length; i++) {
-						alert("hi");
 						// 마커 이미지의 이미지 주소입니다
-						//var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+						var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 						
 						// 마커 이미지의 이미지 크기 입니다
 						var imageSize = new daum.maps.Size(24, 35);
@@ -404,60 +392,47 @@
 						
 						marker.setMap(map); // 지도 위에 마커를 표출합니다
 						
-						marker.click(function(){
-							alert("hi~");
-						});
 						
-						/* (function(marker, name, address, position) {
+						(function(marker, name, address, position) {
 							daum.maps.event.addListener(
 									marker
 									, 'click'
 									, function() {
-										alert("hi");
-										//displayInfowindow(marker, name, address, position);
+										displayInfowindow(marker, name, address, position);
 									});
 						
 						})(marker, places[i].name, places[i].address, places[i].latlng);	
-						// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다 */
+						// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다 
 		
 					}
-	
-					//infowindow를 끌 수 있는 x표시를 만듦
-					var iwRemoveable = true;
-					// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-					var infowindow = new daum.maps.InfoWindow({
-						zIndex : 1,
-						removable : iwRemoveable
-						//removable : true;
-					});
-	
-					// 인포윈도우에 장소명을 표시합니다
-					function displayInfowindow(marker, title, address, position) {
-						//var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-						var content = '<div style="padding:5px; z-index:1; width: 180px; height: 180px;">'
-										+ '<img src="../resources/images/miboondang.jpg" style="width: 160px; padding: 2px;"><hr />'
-										+ title +'<br />'
-										+ address +'<br />'
-										+ position+'<br />'
-										+ '</div>';
-
-						infowindow.setContent(content);
-						infowindow.open(map, marker);
-					}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 				})
-		
-	
 
+		//infowindow를 끌 수 있는 x표시를 만듦
+		var iwRemoveable = true;
+		// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+		var infowindow = new daum.maps.InfoWindow({
+			zIndex : 1,
+			removable : iwRemoveable
+		//removable : true;
+		});
+
+		// 인포윈도우에 장소명을 표시합니다
+		function displayInfowindow(marker, title, address, position) {
+			//var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+			var content = '<div style="padding:5px; z-index:1; width: 180px; height: 180px;">'
+					+ '<img src="../resources/images/miboondang.jpg" style="width: 160px; padding: 2px;"><hr />'
+					+ title
+					+ '<br />'
+					+ address
+					+ '<br />'
+					+ '</div>';
+
+			infowindow.setContent(content);
+			infowindow.open(map, marker);
+		}
+		
+		
 	</script>
 </body>
 </html>

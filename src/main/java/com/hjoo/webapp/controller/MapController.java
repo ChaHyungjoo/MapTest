@@ -118,7 +118,7 @@ public class MapController {
 		model.addAttribute("list", restaurantDao.getList());
 		model.addAttribute("page", restaurantDao.getCount());
 		
-		return "/WEB-INF/views/mapTest6.jsp";
+		return "/WEB-INF/views/mapTest7.jsp";
 	}
 	
 	@RequestMapping(value="map2-ajax", produces="text/plain;charset=UTF-8")
