@@ -121,7 +121,7 @@ public class MapController {
 		return "/WEB-INF/views/mapTest6.jsp";
 	}
 	
-	@RequestMapping("map2-ajax")
+	@RequestMapping(value="map2-ajax", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String restaurant(Model model) {
 		
