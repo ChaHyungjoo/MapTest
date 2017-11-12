@@ -297,18 +297,7 @@
 		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 		
 		/* 학원 마커 고정 --------------------------------------------------------------------------------*/
-		var ajaxButton = $("input[value='ajax']");
-		
-		/* ajaxButton.click(function(e){
-			//alert("hi");
-			$.getJSON("map2-ajax")
-			.done(function(data){
-				alert(data.length);
-				alert(data[0].location);
-			})
-		}); */
-		
-		
+				
 		// 마커가 표시될 위치입니다 
 		var markerPosition  = new daum.maps.LatLng(37.55325832462685, 126.93698692019638); 
 		
@@ -340,21 +329,12 @@
 		
 		$.getJSON("map2-ajax")
 			.done(function(data) {
-					//alert(data.length);
-					//alert(data[0].location);
-					//var str = data[0].location;
-					
-					/* var location = data[0].location.replace(/\(|\)/g,"");
-					var xy = location.split(", ");
-					alert(xy[0]+" "+xy[1]); */
 					
 					var locations = new Array();
 					for(var i=0; i<data.length; i++){
 						var location = data[i].location.replace(/\(|\)/g,"");
 						locations.push(location);
 					}
-					//alert(locations[0]);
-					
 					
 					// 마커를 표시할 위치와 title 객체 배열입니다 
 					/* var positions = [
@@ -377,39 +357,20 @@
 					alert(positionss);
 					alert(positions[0].latlng); */
 					
-					var positionList = new Array();
+					var places = new Array();
 					for(var i=0; i<data.length; i++){
 						var restaurant = new Object();
-						var xy = locations[i].split(", ");
+						var coordinate = locations[i].split(", ");
 						
-						restaurant.title = data[i].name;
-						restaurant.latlng = new daum.maps.LatLng(xy[0], xy[1]);
+						restaurant.name = data[i].name;
+						restaurant.address = data[i].address;
+						restaurant.phone = data[i].name;
+						restaurant.latlng = new daum.maps.LatLng(coordinate[0], coordinate[1]);
 						
-						positionList.push(restaurant);
+						places.push(restaurant);
 					}
 					
-					var positions = JSON.stringify(positionList);
-					//alert(positionList.length);
-					
-					// 마커 이미지의 이미지 주소입니다
-					/* var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-					
-					for (var i = 0; i < positions.length; i++) {
-						
-						// 마커 이미지의 이미지 크기 입니다
-						var imageSize = new daum.maps.Size(24, 35);
-	
-						// 마커 이미지를 생성합니다    
-						var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
-	
-						// 마커를 생성합니다
-						var marker = new daum.maps.Marker({
-							map : map, // 마커를 표시할 지도
-							position : positions[i].latlng, // 마커를 표시할 위치
-							title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-							image : markerImage // 마커 이미지 
-						});
-					} */
+					//var positions = JSON.stringify(places);
 					
 					// 마커 이미지의 이미지 주소입니다
 					var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
@@ -424,17 +385,48 @@
 						// 마커를 생성합니다
 						var marker = new daum.maps.Marker({
 							map : map, // 마커를 표시할 지도
-							position : positionList[i].latlng, // 마커를 표시할 위치
-							title : positionList[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+							position : places[i].latlng, // 마커를 표시할 위치
+							name : places[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 							image : markerImage // 마커 이미지 
 						});
+						
+						
+						(function(marker, name, address, position) {
+							daum.maps.event.addListener(
+									marker
+									, 'click'
+									, function() {
+										alert("hi");
+										//displayInfowindow(marker, name, address, position);
+									});
+						
+						})(marker, places[i].name, places[i].address, places[i].latlng);	
+						// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+		
 					}
 	
+					//infowindow를 끌 수 있는 x표시를 만듦
+					var iwRemoveable = true;
+					// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+					var infowindow = new daum.maps.InfoWindow({
+						zIndex : 1,
+						removable : iwRemoveable
+						//removable : true;
+					});
 	
-	
-	
-	
-	
+					// 인포윈도우에 장소명을 표시합니다
+					function displayInfowindow(marker, title, address, position) {
+						//var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+						var content = '<div style="padding:5px; z-index:1; width: 180px; height: 180px;">'
+										+ '<img src="../resources/images/miboondang.jpg" style="width: 160px; padding: 2px;"><hr />'
+										+ title +'<br />'
+										+ address +'<br />'
+										+ position+'<br />'
+										+ '</div>';
+
+						infowindow.setContent(content);
+						infowindow.open(map, marker);
+					}
 	
 	
 	
