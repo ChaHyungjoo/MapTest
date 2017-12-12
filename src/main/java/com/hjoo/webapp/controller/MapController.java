@@ -43,7 +43,7 @@ public class MapController {
 	
 	@RequestMapping(value="map", method=RequestMethod.GET)
 	public String map() {
-		return "/WEB-INF/views/mapTest5.jsp";
+		return "/WEB-INF/views/mapTest.jsp";
 	}
 
 	//@RequestMapping("map")
@@ -66,12 +66,12 @@ public class MapController {
 		String path = ctx.getRealPath("/resources/upload");
 		//System.out.println(path);
 		
-		File f = new File(path);	//ÆÄÀÏÀÌ ÀúÀåµÉ °æ·Î¸¸ °´Ã¼·Î »ý¼ºµÈ »óÅÂ
+		File f = new File(path);	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
-		//°æ·Î°¡ ¾øÀ» °æ¿ì ÇØ´ç °æ·Î(Æú´õ)¸¦ »ý¼º
+		//ï¿½ï¿½Î°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(!f.exists()) {
 			if(!f.mkdirs())
-				System.out.println("µð·ºÅä¸®¸¦ »ý¼ºÇÒ ¼ö ¾ø½À´Ï´Ù.");
+				System.out.println("ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		}
 		
 		path += File.separator + file.getOriginalFilename();
